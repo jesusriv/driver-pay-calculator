@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import EditLGRates from './EditLGRates';
 
 const WeeklyPay = ({ calculateWP, amounts, setAmounts }) => {
   const [wR, setWr] = useState(true);
   const [type, setType] = useState("");
+
+  const [modalShow, setModalShow] = useState(false);
 
   const radios = [
     { name: "Minutes", value: 1 },
@@ -95,6 +98,15 @@ const WeeklyPay = ({ calculateWP, amounts, setAmounts }) => {
             })
           }} value={amounts.tips.toString()} placeholder="0" type="number" className="form-control" id="tips" aria-describedby="tps" />
         </Form.Group>
+        <div className="d-grid">
+          <Button
+            variant="outline-danger"
+            size="sm"
+            onClick={() => setModalShow(true)}
+          >
+            Edit Local and Guranteed Rate's
+          </Button>
+        </div>
       </Form>
       
       <div className="d-grid">
@@ -107,6 +119,13 @@ const WeeklyPay = ({ calculateWP, amounts, setAmounts }) => {
           Clear
         </Button>
       </div>
+      
+      <EditLGRates 
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        amounts={amounts}
+        setAmounts={setAmounts}
+      />
     </div>
   )
 }

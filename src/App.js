@@ -19,8 +19,9 @@ function App() {
     weekPay: "",
     mileage: "",
     finalPay: "",
-    payPerHour: "",
+    localRate: 14,
     percentage: "",
+    payPerHour: "",
     weeklyRewards: 0,
     guaranteedRate: 22.00,
     driverAdjustments: "",
@@ -38,7 +39,7 @@ function App() {
     isInHours(type);  
     const percentage = (parseFloat(amounts.aet) / amounts.orders) / 60; // ODH?
     const milePay = parseFloat(amounts.miles) * .30;
-    const perDC = Math.ceil(percentage * 14);
+    const perDC = Math.ceil(percentage * amounts.localRate);
     const wP = perDC + milePay + parseFloat(amounts.tips) + parseFloat(amounts.weeklyRewards);
     
     setView(views[1]);

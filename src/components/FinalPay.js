@@ -24,7 +24,9 @@ const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayC
               }} value={amounts.totalScheduledHours.toString()} placeholder="0" type="number" className="form-control" id="totalHours" aria-describedby="tH"/>
             </Form.Group>
           </Form>
-          <button className="btn btn-primary" onClick={calculateFinalPay}>Next</button>
+          <div className="d-grid">
+            <button className="btn btn-primary" onClick={calculateFinalPay}>Next</button>
+          </div>
         </div> : 
         // FINAL PAY CARD
         <div>
