@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayCard }) => {
   const [modalShow, setModalShow] = useState(false);
   const [modaldata, setModaldata] = useState({});
+  const [tempHours, setHours] = useState("");
   return (
     <Container>
       <h1>Final Pay</h1>
@@ -16,16 +17,17 @@ const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayC
           <Form>
             <Form.Group className="mb-2">
               <Form.Label><strong>How Many Hours Was The Driver Scheduled For?</strong></Form.Label>
-              <Form.Control onChange={(e) => {
-                setAmounts({
-                  ...amounts,
-                  totalScheduledHours: parseFloat(e.target.value)
-                });
-              }} value={amounts.totalScheduledHours.toString()} placeholder="0" type="number" className="form-control" id="totalHours" aria-describedby="tH"/>
+              <Form.Control onChange={(e) => setHours(e.target.value)} value={amounts.totalScheduledHours.toString()} placeholder="0" type="number" className="form-control" id="totalHours" aria-describedby="tH"/>
             </Form.Group>
           </Form>
           <div className="d-grid">
-            <button className="btn btn-primary" onClick={calculateFinalPay}>Next</button>
+            <button className="btn btn-primary" onClick={async () => {
+              await setAmounts({
+                ...amounts,
+                totalScheduledHours: parseFloat(tempHours)
+              })
+              calculateFinalPay();
+            }}>Next</button>
           </div>
         </div> : 
         // FINAL PAY CARD
