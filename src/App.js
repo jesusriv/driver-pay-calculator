@@ -39,9 +39,9 @@ function App() {
     isInHours(type);  
     const percentage = (parseFloat(amounts.aet) / amounts.orders) / 60; // ODH?
     const milePay = parseFloat(amounts.miles) * .30;
-    const perDC = Math.ceil(percentage * amounts.localRate);
+    const perDC = parseFloat(percentage).toFixed(4) * amounts.localRate;
     const wP = perDC + milePay + parseFloat(amounts.tips) + parseFloat(amounts.weeklyRewards);
-    
+  
     setView(views[1]);
     setAmounts({
       ...amounts,
@@ -53,8 +53,11 @@ function App() {
   };
 
   const calculateFinalPay = () => {
+    if (amounts.totalScheduledHours === "" || typeof(amounts.totalScheduledHours) !== 'number') {
+      return;
+    }
     setViewFP(true);
-    const ppH = (amounts.pdc / amounts.totalScheduledHours);
+    const ppH = amounts.pdc / amounts.totalScheduledHours;
     const dA = ((amounts.guaranteedRate - ppH) * parseFloat(amounts.totalScheduledHours));
     const finalWeekPay = dA + parseFloat(amounts.weekPay);
     

@@ -8,7 +8,9 @@ import Button from 'react-bootstrap/Button';
 const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayCard }) => {
   const [modalShow, setModalShow] = useState(false);
   const [modaldata, setModaldata] = useState({});
-  const [tempHours, setHours] = useState("");
+  const [tempHours, setHours] = useState({
+    hours: ""
+  });
   return (
     <Container>
       <h1>Final Pay</h1>
@@ -17,17 +19,26 @@ const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayC
           <Form>
             <Form.Group className="mb-2">
               <Form.Label><strong>How Many Hours Was The Driver Scheduled For?</strong></Form.Label>
-              <Form.Control onChange={(e) => setHours(e.target.value)} value={amounts.totalScheduledHours.toString()} placeholder="0" type="number" className="form-control" id="totalHours" aria-describedby="tH"/>
+              <input 
+                onChange={(e) => setHours({
+                  ...tempHours,
+                  hours: e.target.value
+                })} 
+                value={tempHours.hours.toString()} 
+                placeholder="0" type="number" className="form-control" id="totalHours" aria-describedby="tH"/>
             </Form.Group>
           </Form>
           <div className="d-grid">
-            <button className="btn btn-primary" onClick={async () => {
-              await setAmounts({
-                ...amounts,
-                totalScheduledHours: parseFloat(tempHours)
-              })
-              calculateFinalPay();
-            }}>Next</button>
+            <Button 
+              variant="primary"
+              type="submit" 
+              onClick={() => {
+                setAmounts({
+                  ...amounts,
+                  totalScheduledHours: parseFloat(tempHours.hours)
+                })
+                calculateFinalPay();
+            }}>Next</Button>
           </div>
         </div> : 
         // FINAL PAY CARD
@@ -46,7 +57,7 @@ const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayC
                     title: "Pay Per Hour",
                     body: "Driver pay per hour is calculated by dividing a driver's per delivery commission by the total hours scheduled for the week.",
                     ppHFormula: "PDC / Total Scheduled Hours = Pay Per Hour:",
-                    calc: `$${parseFloat(amounts.pdc).toFixed(2)} / ${amounts.totalScheduledHours} = $${amounts.payPerHour}`
+                    calc: `$${parseFloat(amounts.pdc).toFixed(2)} / ${amounts.totalScheduledHours} = $${parseFloat(amounts.payPerHour).toFixed(2)}`
                   })
                   setModalShow(true);
                 }}
@@ -68,7 +79,7 @@ const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayC
                   setModaldata({
                     title: "Driver Adjustments",
                     body: "A driver's adjustments is derived from the subtraction of the PPH from the guranteed rate, multiplied by total hours scheduled for the week.",
-                    calc: `(Guaranteed Rate: $${amounts.guaranteedRate} - Pay Per Hour: $${amounts.payPerHour}) * Total Scheduled Hours ${amounts.totalScheduledHours} = $${amounts.driverAdjustments}`
+                    calc: `(Guaranteed Rate: $${amounts.guaranteedRate} - Pay Per Hour: $${parseFloat(amounts.payPerHour).toFixed(2)} * Total Scheduled Hours ${amounts.totalScheduledHours} = $${parseFloat(amounts.driverAdjustments).toFixed(2)}`
                   });
                   setModalShow(true);
                 }}
@@ -81,7 +92,7 @@ const FinalPay = ({ amounts, setAmounts, calculateFinalPay, viewFP, toWeeklyPayC
                   setModaldata({
                     title: "Final Pay",
                     body: "A driver's final pay is derived from the sum of the driver adjustments and week pay.",
-                    calc: `Driver Adjustments: $${amounts.driverAdjustments} + Week Pay: $${amounts.weekPay} = $${amounts.finalPay}`
+                    calc: `Driver Adjustments: $${parseFloat(amounts.driverAdjustments).toFixed(2)} + Week Pay: $${parseFloat(amounts.weekPay).toFixed(2)} = $${parseFloat(amounts.finalPay.toFixed(2))}`
                   })
                   setModalShow(true);
                 }}

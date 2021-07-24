@@ -117,8 +117,8 @@ const WeeklyPay = ({ calculateWP, amounts, setAmounts }) => {
       </Form>
       
       <div className="d-grid">
-        <Button variant="primary" type="submit" onClick={async() => {
-          await setAmounts({
+        <Button variant="primary" type="submit" onClick={() => {
+          setAmounts({
             ...amounts,
             aet: parseFloat(tempAmounts.aet),
             orders: parseFloat(tempAmounts.orders),

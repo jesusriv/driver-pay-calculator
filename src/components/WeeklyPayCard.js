@@ -25,10 +25,10 @@ const WeeklyPayCard = ({ toFinalPay, amounts}) => {
                   `${amounts.aet} / ${amounts.orders} = ${parseFloat(amounts.aet / amounts.orders).toFixed(1)} minutes:`,
                 percentageFormula: "(Average AET Pay / # of Orders) / 1 hour in minutes = Percentage of Hour To Pay:",
                 percent:
-                  `${parseFloat(amounts.aet / amounts.orders).toFixed(1)} / 60 = ${parseFloat(amounts.percentage).toFixed(2)}%`,
+                  `${parseFloat(amounts.aet / amounts.orders).toFixed(1)} / 60 = ${parseFloat(amounts.percentage).toFixed(4)}%`,
                 pdcFormula: "Percentage * Local Rate = PDC:",
                 pdc:
-                  `${parseFloat(amounts.percentage).toFixed(2)}% * $14 = $${parseFloat(amounts.pdc).toFixed(2)}`
+                  `${parseFloat(amounts.percentage).toFixed(4)}% * $${parseFloat(amounts.localRate).toFixed(2)} = $${parseFloat(amounts.pdc).toFixed(2)}`
               });
               setModalShow(true);
             }} 

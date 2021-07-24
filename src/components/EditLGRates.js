@@ -43,8 +43,8 @@ const EditLGRates = (props) => {
               onClick={() => {
                 props.setAmounts({
                   ...props.amounts,
-                  localRate: tempLR,
-                  guaranteedRate: tempGR
+                  localRate: parseFloat(tempLR),
+                  guaranteedRate: parseFloat(tempGR)
                 });
                 props.onHide();
               }}>
